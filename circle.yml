@@ -1,0 +1,12 @@
+machine:
+  python:
+    version: 3.6.0
+
+dependences:
+  pre:
+    - pip install Django
+
+test:
+  override:
+    - bundle exec danger
+    - python manage.py test

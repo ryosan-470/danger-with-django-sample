@@ -7,4 +7,4 @@
 + Django
 + flake8
 + CircleCI
-
++ Ruby (bundler)
