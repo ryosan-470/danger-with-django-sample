@@ -2,7 +2,7 @@ machine:
   python:
     version: 3.6.0
 
-dependences:
+dependencies:
   pre:
     - pip install Django
 
