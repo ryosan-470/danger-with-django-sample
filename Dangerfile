@@ -1,24 +1,21 @@
+# coding: utf-8
 # -*- mode: ruby -*-
 pep8.lint
 
-
-MARKDOWN_TEMPLATE = <<EOF
-## isort found issues :danger:
-EOF
+MARKDOWN_TEMPLATE = '## isort found issues\n'
 
 errors = []
 git.modified_files.each do |file|
-  `isort #{file}`
-
-  is_modified = `git diff #{file} | wc -l`.strip.to_i > 0
-  errors << "#{file}" if is_modified
+  modified = `isort -df #{file}` if File.extname(file) == ".py"
+  errors << { file: file, diff: modified } if modified
 end
 
 if errors.length > 0
-  report = errors.inject(MARKDOWN_TEMPLATE) do |out, file|
-    out += "* #{file}\n"
+  report = errors.inject(MARKDOWN_TEMPLATE) do |out, err|
+    link = github.html_link("#{err[:file]}", full_path: false)
+    out += "* #{link}\n"
+    out += "```diff\n#{err[:diff]}\n```\n"
   end
-
   markdown(report)
+  fail('isortのエラーを修正してください')
 end
-
