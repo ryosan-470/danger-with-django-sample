@@ -2,7 +2,7 @@
 # -*- mode: ruby -*-
 pep8.lint
 
-MARKDOWN_TEMPLATE = '## isort found issues\n'
+MARKDOWN_TEMPLATE = "## isort found issues\n"
 
 errors = []
 git.modified_files.each do |file|
